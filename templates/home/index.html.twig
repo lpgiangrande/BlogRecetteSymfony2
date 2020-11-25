@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Bienvenue - Accueil {% endblock %} {# Modifie contenu onglet du site #}
+
+{% block body %}
+
+<div class="container mt-5">
+
+    <h1>Accueil</h1>
+
+    <div class="row mt-4">
+        {% for recette in recettes %} 
+        <!--Pour chaque élément recette(variable) dans recette(tableau d'objets)), afficher la recette-->
+        <div class="col-md-4 mb-4">
+            <div class="card mt-4 h-100" style="width: 18rem;">
+                {% if recette.imageName %}
+                    <img class="card-img-top" src="{{ vich_uploader_asset(recette) }}" alt="">
+                {% else %}
+                    <img class="card-img-top" src=" {{asset('images/recettes/notfound.png')}}" alt="">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ recette.titre }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ recette.createdAt | format_datetime() }}</h6>
+                    <p class="card-text">{{ recette.resume }}</p>
+                    <a href="#" class="card-link">Voir la recette</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

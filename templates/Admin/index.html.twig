@@ -1,0 +1,41 @@
+{% extends "base.html.twig" %}
+
+{% block title %} Administration {% endblock %}
+
+{% block body %}
+    <div class="container mt-5"> <!-- Ajoute une alert success quand recette ajoutée -->
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+        {% endfor %}
+
+
+
+        <h1>Gestion des recettes</h1>
+
+        <a href="{{ path('admin_create') }}"class="btn btn-success btn-sm mt-3 mb-3">Ajouter</a>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>TITRE</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for recette in recettes %}
+                <tr>
+                    <td>{{ recette.id }}</td>
+                    <td>{{ recette.titre}}</td>
+                    <td>
+                        <a href="{{path('admin_edit', {id: recette.id} ) }}" class="btn btn-secondary btn-sm">Editer</a>
+                        <button class="btn btn-danger btn-sm">Supprimer</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

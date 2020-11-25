@@ -1,0 +1,8 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+#index:
+#  path: /
+# controller: App\Controller\HomeController::index
+# Ou : routes dans /**@ au-dessus de la function dans fichier controller

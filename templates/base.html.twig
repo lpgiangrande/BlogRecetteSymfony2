@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="{{ path('home') }}">BLOGRECETTE</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item {% if menu is defined and menu == 'home' %} active {% endif %}">
+                        <a class="nav-link" href="{{ path('home') }}">Recettes <span class="sr-only">(current)</span></a>
+                    </li>
+                    <!--pour le rôle USER-->
+                    {% if is_granted('ROLE_USER', app.user) %} 
+                    <li class="nav-item {% if menu is defined and menu == 'add' %} active {% endif %}">
+                        <a class="nav-link" href="{{ path('admin_create') }}">Proposer une recette <span class="sr-only">(current)</span></a>
+                    </li>
+                    {% endif %}
+                    <!---->
+                    <li class="nav-item {% if menu is defined and menu == 'contact' %} active {% endif %}">
+                        <a class="nav-link" href="{{ path('home_contact') }}">Nous contacter <span class="sr-only">(current)</span></a>
+                    </li>
+                    <!--pour le rôle ADMIN-->
+                    {% if is_granted('ROLE_ADMIN', app.user) %}
+                        <li class="nav-item dropdown{% if menu is defined and menu == 'admin' %} active {% endif %}">
+                            <a class="nav-link dropdown-toggle" href="{{path('admin_index')}}" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Admin
+                            </a>
+                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="nav-link dropdown-toggle" href="{{ path('admin_index') }}">Gestion Recettes</a>
+                                    <a class="nav-link dropdown-toggle" href="#">Gestion Catégories</a>
+                                </div>
+                        </li>
+                    {% endif %}
+                    <!---->
+                </ul>
+                <ul class="navbar-nav">
+                    {% if app.user %}
+                        <li class="nav-item"><a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{{ path('app_login') }}">Connexion</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
